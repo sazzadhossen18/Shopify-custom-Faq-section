@@ -1,0 +1,158 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="containersazzad">
+  <h1>{{ section.settings.sec_head }}</h1>
+
+
+     {%- for block in section.blocks -%}
+      
+          <button class="accordion">{{ block.settings.title }}</button>
+          <div class="accordion-content">
+            <p>
+              {{ block.settings.content }}
+            </p>
+          </div>
+       
+       {% endfor %}
+
+ 
+ 
+</div>
+
+
+<style>
+
+.containersazzad {
+  width: 55%;
+  margin: 50px auto;
+}
+
+  
+button.accordion {
+  border-radius: 1rem;
+    width: 100%;
+    background-color: #F5F5F4;
+    border: none;
+    outline: none;
+    text-align: left;
+    padding: 23px 20px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+}
+
+button.accordion:after {
+    font-family: FontAwesome;
+    content: "\f067";
+    font-family: "fontawesome";
+    font-size: 22px;
+    float: right;
+    padding: 0 10px;
+}
+button.accordion.is-open:after {
+  content: "\f068";
+}
+
+ button.accordion.is-open {
+    background-color: #F5F5F4;
+    border-radius: 1rem 1rem 0px 0px;
+}
+.accordion-content {
+   border-radius: 0rem 0rem 1rem 1rem;
+  background-color: #F5F5F4;
+  border-left: 1px solid  #F5F5F4;
+  border-right: 1px solid  #F5F5F4;
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-in-out;
+}
+
+
+
+@media (max-width: 768px) {
+  
+ .containersazzad {
+  width: 97%;
+  margin: 50px auto;
+}
+
+  
+}
+  
+</style>
+
+<script>
+
+const accordionBtns = document.querySelectorAll(".accordion");
+
+accordionBtns.forEach((accordion) => {
+  accordion.onclick = function () {
+    this.classList.toggle("is-open");
+
+    let content = this.nextElementSibling;
+    console.log(content);
+
+    if (content.style.maxHeight) {
+      //this is if the accordion is open
+      content.style.maxHeight = null;
+    } else {
+      //if the accordion is currently closed
+      content.style.maxHeight = content.scrollHeight + "px";
+      console.log(content.style.maxHeight);
+    }
+  };
+});
+
+</script>
+
+
+{% schema %}
+  {
+    "name": "FAQ Section",
+    "settings": [
+    {
+      "type": "text",
+      "id": "sec_head",
+      "label": "Heading"
+    }
+     
+  ],
+
+  "blocks": [
+     {
+       "name": "Slide",
+       "type": "slide",
+       "settings": [
+         {
+           "type": "text",
+           "id": "title",
+           "label": "Title"
+         },
+         {
+           "type": "richtext",
+           "id": "content",
+           "label": "content"
+         }
+         
+       ]
+     }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Section"
+      
+    }
+  ]
+
+    
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
