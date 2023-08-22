@@ -156,3 +156,186 @@ accordionBtns.forEach((accordion) => {
 
 {% javascript %}
 {% endjavascript %}
+
+
+
+
+
+
+
+<div class="faq-page">
+  <div class="faq-page-width">
+
+    <div class="faq-page-header">
+      <h1>{{ page.title }}</h1>
+
+      <div class="faq-page-header-content">
+        {{ page.content }}
+      </div>
+    </div>
+
+    <div class="faq-page-body">
+      {% for block in section.blocks %}
+        {% if block.type == 'category' %}
+          <h2 class="faq-page-category">{{ block.settings.title }}</h2>
+        {% else %}
+          <div class="faq-page-question">
+            <header class="faq-page-question-header">
+              <h3>{{ block.settings.title }}</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="48"><path d="M480-345 240-585l43-43 197 198 197-197 43 43-240 239Z"/></svg>
+            </header>
+            <div class="faq-page-question-body">
+              <div class="faq-page-question-body-inner">
+                {{ block.settings.body }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category title"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question title"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Question body"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+
+
+const questionHeaders = document.querySelectorAll(".faq-page-question-header");
+
+questionHeaders.forEach((header) => {
+  header.addEventListener("click", () => {
+    header.parentElement.classList.toggle("active");
+  });
+});
+
+
+
+
+/*
+  FAQ page
+*/
+
+.faq-page {
+  padding: 60px 0;
+}
+
+.faq-page-width {
+  max-width: 500px;
+  margin: 0 auto;
+  width: calc(100% - 40px);
+}
+
+.faq-page-header {
+  padding-bottom: 30px;
+}
+
+.faq-page-header h1 {
+  font-size: 44px;
+  margin-bottom: 10px;
+}
+
+.faq-page-header-content {
+  font-size: 21px;
+}
+
+.faq-page-category {
+  text-transform: uppercase;
+  opacity: 0.4;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.faq-page-question + .faq-page-category {
+  margin-top: 30px;
+}
+
+.faq-page-question {
+  border-bottom: 1px solid #ddd;
+}
+
+.faq-page-question-header {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.faq-page-question-header h3 {
+  font-size: 18px;
+  flex: 1;
+}
+
+.faq-page-question-header svg {
+  width: 36px;
+  transition: 0.2s transform;
+}
+
+.faq-page-question.active .faq-page-question-header svg {
+  transform: rotate(180deg);
+}
+
+.faq-page-question-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: 1s max-height;
+}
+
+.faq-page-question.active .faq-page-question-body {
+  max-height: 400px;
+}
+
+.faq-page-question-body-inner > * + * {
+  margin-top: 20px;
+}
+
+.faq-page-question-body-inner {
+  padding-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+
